@@ -1,0 +1,145 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hyperledger Fabcar Application</title>
+    <link rel="icon" href="favicon.png" type="image/gif">
+
+    <!-- require jquery and bootstrap scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    
+    <!-- adding style here -->
+    <style type="text/css">
+      header{
+        background-color: lightgray;
+        font-size:20px;
+        padding:15px;
+      }
+      header, .form-group{
+        margin-bottom: 3%;
+      }
+      .form-group{
+        width:50%;
+      }
+      #body{
+        margin-left:3%;
+        margin-right:3%;
+      }
+      .form-control{
+        margin: 8px;
+      }
+      #right_header{
+        width:20%;
+        font-size:15px;
+        margin-right:0px;
+      }
+      #left_header{
+        margin-left:0;
+        width:40%;
+        display:inline-block;
+      } 
+      #id {
+        width:49%;
+        display: inline-block;
+      }
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body ng-app="application" ng-controller="appController">
+    <header>
+      <div id="left_header">Hyperledger Fabcar Application</div>
+      <i id="right_header">Example Blockchain Application for Introduction to Hyperledger Fabric LFS171x</i>
+    </header>
+
+    <div id="body">
+      <div class="form-group">
+        <label>Query All Cars</label>
+        <p><input id="queryAllCars" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllCars()"></p>
+      </div>
+ 
+      <table id="all_car" class="table" align="center">
+
+        <tr>
+          <th>ID</th>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Color</th>
+          <th>Owner</th>
+        </tr>
+
+        <tr ng-repeat="car in all_car">
+          <td>{{car.Key}}</td>
+          <td>{{car.make}}</td>
+          <td>{{car.model}}</td>
+          <td>{{car.color}}</td>
+          <td>{{car.owner}}</td>
+        </tr>
+      </table>
+
+      <div class="form-group">
+        <label>Query about a specific Car :</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Car Id</h5>
+        
+        Enter a Car Number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="car_id">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryCar()">
+      </div>
+
+      <table id="query_car" class="table" align="center">
+
+        <tr>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Color</th>
+          <th>Owner</th>
+        </tr>
+
+        <tr>
+          <td style="height:2.5vw;">{{query_car.make}}</td>
+          <td style="height:2.5vw;">{{query_car.model}}</td>
+          <td style="height:2.5vw;">{{query_car.color}}</td>
+          <td style="height:2.5vw;">{{query_car.owner}}</td>
+        </tr>
+      </table>
+
+      <div class="form-group">
+        <label>Report Car Record</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_car}}</h5>
+        <br>
+        Enter Car id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="car.id">
+        Enter make: <input class="form-control" type="text" placeholder="Ex: Bugati" ng-model="car.make">
+        
+        Enter model: <input class="form-control" type="text" placeholder="Ex: Veryon Super Sport" ng-model="car.model">
+        Enter car color: <input class="form-control" type="text" placeholder="Ex: Black-Red" ng-model="car.color">
+        Enter name of owner: <input class="form-control" type="text" placeholder="Ex: Scott" ng-model="car.owner">
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="createCar()"> 
+      </div>
+
+      <div class="form-group">
+        <label>Change Car Owner</label><br>
+        <h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_owner}}</h5>
+        Enter a valid Car id: <input class="form-control" name="assetSelect" placeholder="Ex: 1" ng-model="owner.id">
+        Enter name of new Owner: <input class="form-control" name="assetSelect" placeholder="Ex: Barry" ng-model="owner.name">
+        <input id="transferSubmit" type="submit" value="Change" class="btn btn-primary" ng-click="changeOwner()">
+      </div>
+
+    </div>
+  </body>
+    <!-- requiring the angular page -->
+    <script type="text/javascript" src="app.js"> </script>
+</html>
